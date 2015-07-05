@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Instagrito</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f06060">
     <style>
 
         html, input{
@@ -74,36 +75,52 @@
 <div class="container">
     <a href="#01">01</a>
     <audio id="audio-01" src="audio/sound-01.wav" preload="auto"></audio>
+
     <a href="#02">02</a>
     <audio id="audio-02" src="audio/sound-02.wav" preload="auto"></audio>
+
     <a href="#03">03</a>
     <audio id="audio-03" src="audio/sound-03.wav" preload="auto"></audio>
+
     <a href="#04">04</a>
     <audio id="audio-04" src="audio/sound-04.wav" preload="auto"></audio>
+
+    <a href="#05">05</a>
+    <audio id="audio-05" src="audio/sound-05.wav" preload="auto"></audio>
+
     <a href="#06">06</a>
     <audio id="audio-06" src="audio/sound-06.wav" preload="auto"></audio>
+
     <a href="#07">07</a>
     <audio id="audio-07" src="audio/sound-07.wav" preload="auto"></audio>
+
     <a href="#08">08</a>
-    <audio id="audio-08" src="audio/sound-10.wav" preload="auto"></audio>
-    <a href="#09">09</a>
-    <audio id="audio-09" src="audio/sound-05.wav" preload="auto"></audio>
-    <a href="#10">10</a>
-    <audio id="audio-10" src="audio/sound-09.wav" preload="auto"></audio>
-
-
+    <audio id="audio-08" src="audio/sound-08.wav" preload="auto"></audio>
 </div>
 
 <script>
+    function scream(audioId) {
+        var target = document.getElementById(audioId);
+        target.play();
+    }
+
     function getCurrentHash() {
         if (location.hash) {
-            gritar('audio-' + window.location.hash.substring(1));
+            scream('audio-' + window.location.hash.substring(1));
         }
     }
 
-    function gritar(soundId) {
-        var audioElem = document.getElementById(soundId);
-        audioElem.play();
+    var links = document.querySelectorAll('a');
+
+    for (var i = 0, l = links.length; i < l; i++) {
+        links[i].addEventListener('click', function(e) {
+            var target = e.target.href,
+                splitTarget = target.split('#');
+
+            target = splitTarget[splitTarget.length - 1];
+            scream('audio-' + target);
+            // mobile devices just play on touch events
+        })
     }
 
     window.addEventListener('hashchange', getCurrentHash);
